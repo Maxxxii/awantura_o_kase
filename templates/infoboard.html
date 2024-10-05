@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Host Dashboard</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      /* Base Styles */
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: white;
+        margin: 0; /* Ensure no extra margin */
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      /* Container for the content */
+      .host-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 15px;
+        background: linear-gradient(145deg, #2e2e2e, #1a1a1a);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Welcome message for the host */
+      .welcome-message {
+        font-size: 40px;
+        text-align: center;
+        color: #f4f4f4;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+      }
+
+      /* General Info styling */
+      .info {
+        font-size: 30px;
+        text-align: center;
+        color: #ddd;
+        padding: 5px;
+        line-height: 35px;
+        margin-bottom: 15px;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      /* Category section styling with background */
+      .info#category {
+        background-color: #007acc; /* Light blue for category */
+        color: white;
+        font-weight: bold;
+      }
+
+      /* Question section styling with background */
+      .info#question {
+        background-color: #ffcc00; /* Bright yellow for question */
+        color: #333;
+        font-weight: bold;
+      }
+
+      /* Answer section styling (green background for correct answer) */
+      .info#answer {
+        background-color: #28a745; /* Green for correct answer */
+        color: #fff;
+        font-weight: bold;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Teams container for scores and bids */
+      .teams-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      /* Team styling */
+      .team {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: #292929;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s, background-color 0.3s;
+      }
+
+      /* Blue team */
+      .team.blue {
+        background-color: #0066ff;
+      }
+
+      /* Green team */
+      .team.green {
+        background-color: #00cc66;
+      }
+
+      /* Yellow team - switching text color to black for visibility */
+      .team.yellow {
+        background-color: #ffcc00;
+      }
+      .team.yellow .team-name,
+      .team.yellow .team-score,
+      .team.yellow .team-bid {
+        color: #333; /* Dark text to contrast yellow */
+      }
+
+      /* Hover effect for team cards */
+      .team:hover {
+        transform: translateY(-5px);
+        background-color: #3a3a3a;
+      }
+
+      /* Team name styling */
+      .team-name {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Score and Bid styling */
+      .team-score,
+      .team-bid {
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: #f4f4f4;
+      }
+
+      /* Pool of bids styling */
+      .pool-bids {
+        margin-top: 30px;
+        font-size: 28px;
+        text-align: center;
+        color: #ff6666;
+        font-weight: bold;
+        border-top: 2px solid #444;
+        padding-top: 15px;
+        width: 100%;
+      }
+    </style>
+    <script>
+      const socket = io();
+      socket.on("updateQuestionboard", function (data) {
+        document.getElementById("category").innerText = "Category: " + data.currentQuestion.category;
+        document.getElementById("question").innerText = "Question: " + data.currentQuestion.text;
+        document.getElementById("answer").innerText = "Answer: " + data.currentQuestion.answer;
+      });
+      socket.on("updateScoreboard", function (data) {
+        document.getElementById("blue-score").innerText = "Score: " + data.teamBalances.blue;
+        document.getElementById("blue-bid").innerText = "Bid: " + data.teamBids.blue;
+
+        document.getElementById("green-score").innerText = "Score: " + data.teamBalances.green;
+        document.getElementById("green-bid").innerText = "Bid: " + data.teamBids.green;
+
+        document.getElementById("yellow-score").innerText = "Score: " + data.teamBalances.yellow;
+        document.getElementById("yellow-bid").innerText = "Bid: " + data.teamBids.yellow;
+
+        document.getElementById("pool-bids").innerText = "Pool of Bids: " + data.bidPool;
+      });
+    </script>
+  </head>
+  <body>
+    <div class="host-container">
+      <div class="welcome-message">{{host}}</div>
+
+      <div id="category" class="info">Category: {{category}}</div>
+      <div id="question" class="info">Question: {{text}}</div>
+      <div id="answer" class="info">Answer: {{answer}}</div>
+
+      <div class="teams-container">
+        <div class="team blue">
+          <div class="team-name">Blue Team</div>
+          <div id="blue-score" class="team-score">Score: {{blue_score}}</div>
+          <div id="blue-bid" class="team-bid">Bid: {{blue_bid}}</div>
+        </div>
+        <div class="team green">
+          <div class="team-name">Green Team</div>
+          <div id="green-score" class="team-score">Score: {{green_score}}</div>
+          <div id="green-bid" class="team-bid">Bid: {{green_bid}}</div>
+        </div>
+        <div class="team yellow">
+          <div class="team-name">Yellow Team</div>
+          <div id="yellow-score" class="team-score">Score: {{yellow_score}}</div>
+          <div id="yellow-bid" class="team-bid">Bid: {{yellow_bid}}</div>
+        </div>
+      </div>
+
+      <div id="pool-bids" class="pool-bids">Pool of Bids: {{pool_bids}}</div>
+    </div>
+  </body>
+</html>

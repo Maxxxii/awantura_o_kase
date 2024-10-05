@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Control</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .header {
+        text-align: center;
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 2em;
+        text-transform: uppercase;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        flex-grow: 1;
+      }
+
+      .category-column {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        height: 150px;
+      }
+
+      .category-column h2 {
+        font-size: 1.2em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #3498db;
+        color: white;
+        font-size: 1em;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        max-width: 150px;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      .question-container {
+        text-align: center;
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .question-container h2 {
+        font-size: 1.5em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #27ae60;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        .category-column {
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Question Control</h1>
+    </div>
+
+    <div class="container">
+      <!-- Categories and buttons for drawing questions -->
+      <div class="category-column">
+        <h2>Historia szkoły</h2>
+        <button onclick="drawQuestion('Historia szkoły')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Lekcje i przerwy</h2>
+        <button onclick="drawQuestion('Lekcje i przerwy')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Wydarzenia szkolne</h2>
+        <button onclick="drawQuestion('Wydarzenia szkolne')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Bufet szkolny</h2>
+        <button onclick="drawQuestion('Bufet szkolny')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Ciekawostki szkolne</h2>
+        <button onclick="drawQuestion('Ciekawostki szkolne')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Uczniowie i absolwenci</h2>
+        <button onclick="drawQuestion('Uczniowie i absolwenci')">Wylosuj</button>
+      </div>
+      <div class="category-column">
+        <h2>Dwójka a sport</h2>
+        <button onclick="drawQuestion('Dwójka a sport')">Wylosuj</button>
+      </div>
+    </div>
+
+    <div class="sound-buttons" style="display: flex; justify-content: space-between; margin-top: 20px">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <button onclick="playIntroSound()">Play Intro Sound</button>
+        <button onclick="stopIntroSound()">Stop Intro Sound</button>
+      </div>
+      <div>
+        <button onclick="playCategorySound()">Play Category Sound</button>
+      </div>
+    </div>
+
+    <!-- Section for the drawn question and its answer -->
+    <div class="question-container">
+      <h2 id="drawn-question">No question drawn yet.</h2>
+      <p id="drawn-answer" class="answer" style="display: none">Answer will be shown here.</p>
+    </div>
+
+    <script>
+      // Draw question based on the category
+      function drawQuestion(category) {
+        $.post("/draw-question", { category: category }, function (data) {
+          $("#drawn-question").text("Question: " + data.currentQuestion.text);
+          $("#drawn-answer")
+            .text("Answer: " + data.currentQuestion.answer)
+            .show();
+        });
+      }
+
+      function playCategorySound() {
+        var audio = new Audio("http://localhost:3000/sounds/category.mp3");
+        audio.play();
+      }
+
+      var introAudio = new Audio("http://localhost:3000/sounds/intro.mp3");
+
+      function playIntroSound() {
+        introAudio.loop = true;
+        introAudio.play();
+      }
+
+      function stopIntroSound() {
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }
+    </script>
+  </body>
+</html>

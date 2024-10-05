@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scoreboard</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      @font-face {
+        font-family: "Familiada";
+        src: url("http://localhost:3000/familiada.ttf") format("truetype");
+      }
+      body {
+        font-family: "Familiada", Arial, sans-serif;
+        background-color: transparent;
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .scoreboard-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .bid-container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        height: 100%;
+      }
+      .team-column {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        box-sizing: border-box;
+        align-items: center;
+      }
+      .label {
+        font-size: 14px;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+      }
+      .bid,
+      .balance,
+      .pool {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+      }
+      .balance {
+        padding: 15px;
+      }
+      .bid {
+        padding: 15px;
+      }
+      .blue-column {
+        background-color: #0066cc;
+      }
+      .bid-label {
+        width: 75%;
+        font-size: 18px;
+        text-align: center;
+        line-height: 20px;
+        letter-spacing: 12px;
+        color: white;
+        background-color: #000000;
+        padding: 5px;
+      }
+      .green-column {
+        background-color: #00cc66;
+      }
+      .yellow-column {
+        background-color: #ffcc00;
+        color: black;
+      }
+      .pool-column {
+        background-color: #333333;
+        justify-content: flex-end;
+      }
+      .pool {
+        color: #ffff00;
+        font-size: 40px;
+      }
+      .stan-konta-container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        height: 100%;
+      }
+      .stan-konta-label {
+        width: 100%;
+        font-size: 18px;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        background-color: #000000;
+        padding: 5px;
+      }
+    </style>
+    <script>
+      const socket = io();
+      socket.on("updateScoreboard", function (data) {
+        document.getElementById("yellowBid").innerText = data.teamBids.yellow;
+        document.getElementById("blueBid").innerText = data.teamBids.blue;
+        document.getElementById("greenBid").innerText = data.teamBids.green;
+        document.getElementById("pool").innerText = data.bidPool;
+        document.getElementById("yellowBalance").innerText = data.teamBalances.yellow;
+        document.getElementById("blueBalance").innerText = data.teamBalances.blue;
+        document.getElementById("greenBalance").innerText = data.teamBalances.green;
+      });
+      document.fonts.ready.then(function () {
+        if (document.fonts.check("12px Familiada")) {
+          console.log("Familiada font loaded successfully");
+        } else {
+          console.log("Familiada font failed to load");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="scoreboard-container">
+      <div class="bid-label">LICYTACJA</div>
+      <div class="bid-container">
+        <div class="team-column blue-column">
+          <div id="blueBid" class="bid">{{blueBid}}</div>
+        </div>
+        <div class="team-column green-column">
+          <div id="greenBid" class="bid">{{greenBid}}</div>
+        </div>
+        <div class="team-column yellow-column">
+          <div id="yellowBid" class="bid">{{yellowBid}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="stan-konta-container">
+      <div class="team-column blue-column">
+        <div class="stan-konta-label blue-column">STAN KONTA</div>
+        <div id="blueBalance" class="balance">{{blueBalance}}</div>
+      </div>
+      <div class="team-column green-column">
+        <div class="stan-konta-label green-column">STAN KONTA</div>
+        <div id="greenBalance" class="balance">{{greenBalance}}</div>
+      </div>
+      <div class="team-column yellow-column">
+        <div class="stan-konta-label yellow-column">STAN KONTA</div>
+        <div id="yellowBalance" class="balance">{{yellowBalance}}</div>
+      </div>
+      <div class="team-column pool-column">
+        <div class="stan-konta-label yellow-column">PULA</div>
+        <div id="pool" class="pool">{{bidPool}}</div>
+      </div>
+    </div>
+  </body>
+</html>

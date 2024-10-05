@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Questionboard</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      @font-face {
+        font-family: "Familiada";
+        src: url("http://localhost:3000/familiada.ttf") format("truetype");
+      }
+      body {
+        font-family: "Familiada", Arial, sans-serif;
+        background-color: transparent;
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .question-container {
+        background-color: #00008b;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 50px;
+        align-items: center;
+      }
+      .question {
+        font-size: 45px;
+        text-align: center;
+        color: white;
+        padding: 5px;
+        line-height: 50px;
+      }
+    </style>
+    <script>
+      const socket = io();
+      socket.on("updateQuestionboard", function (data) {
+        document.getElementById("question").innerText = data.currentQuestion.text.toUpperCase();
+      });
+      document.fonts.ready.then(function () {
+        if (document.fonts.check("12px Familiada")) {
+          console.log("Familiada font loaded successfully");
+        } else {
+          console.log("Familiada font failed to load");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="question-container">
+      <div id="question" class="question">{{text}}</div>
+    </div>
+  </body>
+</html>
