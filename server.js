@@ -6,6 +6,7 @@ import scoreboardRoutes from "./routes/scoreboard.js";
 import questionControlRoutes from "./routes/question-control.js";
 import questionboardRoutes from "./routes/questionboard.js";
 import infoboardRoutes from "./routes/infoboard.js";
+import soundControlRoutes from "./routes/sound-control.js";
 import { io as gameStateIo } from "./gameState.js";
 import { io as questionStateIo } from "./questionState.js";
 import cors from "cors";
@@ -26,6 +27,7 @@ app.use("/", scoreboardRoutes);
 app.use("/", questionControlRoutes);
 app.use("/", questionboardRoutes);
 app.use("/", infoboardRoutes);
+app.use("/", soundControlRoutes);
 // Socket.io setup
 gameStateIo(io);
 questionStateIo(io);

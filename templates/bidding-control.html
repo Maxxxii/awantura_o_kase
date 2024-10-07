@@ -118,7 +118,7 @@
         margin-top: 10px;
       }
       .fast-bid-button {
-        width: 48%;
+        width: 30%;
         font-size: 1.1em;
         padding: 10px 0;
       }
@@ -152,12 +152,11 @@
     </style>
     <script>
       function updateBid(team) {
-        var audio = new Audio("http://localhost:3000/sounds/bid.mp3");
-        audio.play();
         const bid = parseInt($(`#${team}Bid`).val()) || 0;
         $.post("/bid", { team: team, bid: bid }, function (data) {
           updateGameState(data);
         });
+        $.post("/play-bid");
       }
 
       function fastBid(team, amount) {
@@ -184,11 +183,10 @@
       }
 
       function initializeBidding() {
-        var audio = new Audio("http://localhost:3000/sounds/bid.mp3");
-        audio.play();
         $.post("/initialize-bidding", function (data) {
           updateGameState(data);
         });
+        $.post("/play-bid");
       }
 
       function resetBidding() {
@@ -233,8 +231,9 @@
         <input type="number" id="blueBid" placeholder="Bid for Blue Team" />
         <button onclick="updateBid('blue')">Update Blue Bid</button>
         <div class="fast-bid-container">
-          <button class="fast-bid-button" onclick="fastBid('blue', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('blue', 200)">+200</button>
+          <button class="fast-bid-button" onclick="fastBid('blue', 300)">+300</button>
+          <button class="fast-bid-button" onclick="fastBid('blue', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('blue')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('blue')">Blue Wins</button>
@@ -246,8 +245,9 @@
         <input type="number" id="greenBid" placeholder="Bid for Green Team" />
         <button onclick="updateBid('green')">Update Green Bid</button>
         <div class="fast-bid-container">
-          <button class="fast-bid-button" onclick="fastBid('green', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('green', 200)">+200</button>
+          <button class="fast-bid-button" onclick="fastBid('green', 300)">+300</button>
+          <button class="fast-bid-button" onclick="fastBid('green', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('green')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('green')">Green Wins</button>
@@ -259,8 +259,9 @@
         <input type="number" id="yellowBid" placeholder="Bid for Yellow Team" />
         <button onclick="updateBid('yellow')">Update Yellow Bid</button>
         <div class="fast-bid-container">
-          <button class="fast-bid-button" onclick="fastBid('yellow', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('yellow', 200)">+200</button>
+          <button class="fast-bid-button" onclick="fastBid('yellow', 300)">+300</button>
+          <button class="fast-bid-button" onclick="fastBid('yellow', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('yellow')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('yellow')">Yellow Wins</button>

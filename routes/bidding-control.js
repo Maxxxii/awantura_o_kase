@@ -3,9 +3,11 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { updateBids, declareWinner, getGameState, resetGame } from "../gameState.js";
+import playSound from "play-sound";
 
 const router = express.Router();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const player = playSound({ player: "mplayer" });
 
 router.get("/bidding-control", async (req, res) => {
   const template = await fs.readFile(path.join(__dirname, "../templates/bidding-control.html"), "utf-8");
@@ -31,6 +33,7 @@ router.post("/declare-winner", (req, res) => {
 router.post("/initialize-bidding", (req, res) => {
   const initialBid = 200;
   updateBids({ yellow: initialBid, blue: initialBid, green: initialBid });
+
   res.json(getGameState());
 });
 

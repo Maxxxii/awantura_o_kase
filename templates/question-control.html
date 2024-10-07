@@ -156,14 +156,12 @@
       </div>
     </div>
 
-    <!-- Section for the drawn question and its answer -->
     <div class="question-container">
       <h2 id="drawn-question">No question drawn yet.</h2>
       <p id="drawn-answer" class="answer" style="display: none">Answer will be shown here.</p>
     </div>
 
     <script>
-      // Draw question based on the category
       function drawQuestion(category) {
         $.post("/draw-question", { category: category }, function (data) {
           $("#drawn-question").text("Question: " + data.currentQuestion.text);
@@ -174,20 +172,15 @@
       }
 
       function playCategorySound() {
-        var audio = new Audio("http://localhost:3000/sounds/category.mp3");
-        audio.play();
+        $.post("play-category");
       }
 
-      var introAudio = new Audio("http://localhost:3000/sounds/intro.mp3");
-
       function playIntroSound() {
-        introAudio.loop = true;
-        introAudio.play();
+        $.post("/play-intro");
       }
 
       function stopIntroSound() {
-        introAudio.pause();
-        introAudio.currentTime = 0;
+        $.post("/stop-intro");
       }
     </script>
   </body>
