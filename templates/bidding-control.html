@@ -35,10 +35,10 @@
         justify-content: space-between;
         padding: 0 10px;
         flex-grow: 1;
-        gap: 20px; /* Add space between columns */
+        gap: 20px;
       }
       .team-column {
-        width: calc(33.33% - 14px); /* Adjust width to account for gap */
+        width: calc(25% - 15px);
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -156,7 +156,6 @@
         $.post("/bid", { team: team, bid: bid }, function (data) {
           updateGameState(data);
         });
-        $.post("/play-bid");
       }
 
       function fastBid(team, amount) {
@@ -176,9 +175,11 @@
         $("#yellowBalance").text(data.teamBalances.yellow);
         $("#blueBalance").text(data.teamBalances.blue);
         $("#greenBalance").text(data.teamBalances.green);
+        $("#redBalance").text(data.teamBalances.red);
         $("#yellowBid").val(data.teamBids.yellow);
         $("#blueBid").val(data.teamBids.blue);
         $("#greenBid").val(data.teamBids.green);
+        $("#redBid").val(data.teamBids.red);
         $("#bidPool").text(data.bidPool);
       }
 
@@ -186,7 +187,6 @@
         $.post("/initialize-bidding", function (data) {
           updateGameState(data);
         });
-        $.post("/play-bid");
       }
 
       function resetBidding() {
@@ -195,7 +195,7 @@
         });
       }
 
-      const initialBalance = 5000; // Add this line to store the initial balance
+      const initialBalance = 5000;
 
       function vaBanque(team) {
         const currentBalance = parseInt($(`#${team}Balance`).text()) || 0;
@@ -225,6 +225,7 @@
     </div>
 
     <div class="container">
+      <!-- Blue Team -->
       <div class="team-column">
         <h2>Blue Team</h2>
         <p>Balance: <span id="blueBalance" class="team-balance">5000</span></p>
@@ -265,6 +266,20 @@
         </div>
         <button class="va-banque-button" onclick="vaBanque('yellow')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('yellow')">Yellow Wins</button>
+      </div>
+
+      <div class="team-column">
+        <h2>Red Team</h2>
+        <p>Balance: <span id="redBalance" class="team-balance">5000</span></p>
+        <input type="number" id="redBid" placeholder="Bid for Red Team" />
+        <button onclick="updateBid('red')">Update Red Bid</button>
+        <div class="fast-bid-container">
+          <button class="fast-bid-button" onclick="fastBid('red', 200)">+200</button>
+          <button class="fast-bid-button" onclick="fastBid('red', 300)">+300</button>
+          <button class="fast-bid-button" onclick="fastBid('red', 400)">+400</button>
+        </div>
+        <button class="va-banque-button" onclick="vaBanque('red')">Va Banque</button>
+        <button class="win-button" onclick="declareWinner('red')">Red Wins</button>
       </div>
     </div>
 

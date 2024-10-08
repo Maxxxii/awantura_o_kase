@@ -32,7 +32,7 @@ router.post("/declare-winner", (req, res) => {
 
 router.post("/initialize-bidding", (req, res) => {
   const initialBid = 200;
-  updateBids({ yellow: initialBid, blue: initialBid, green: initialBid });
+  updateBids({ yellow: initialBid, blue: initialBid, green: initialBid, red: initialBid });
 
   res.json(getGameState());
 });

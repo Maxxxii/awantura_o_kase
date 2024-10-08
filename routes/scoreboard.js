@@ -15,10 +15,12 @@ router.get("/scoreboard", async (req, res) => {
     .replace("{{yellowBid}}", teamBids.yellow)
     .replace("{{blueBid}}", teamBids.blue)
     .replace("{{greenBid}}", teamBids.green)
+    .replace("{{redBid}}", teamBids.red)
     .replace("{{bidPool}}", bidPool)
     .replace("{{yellowBalance}}", teamBalances.yellow)
     .replace("{{blueBalance}}", teamBalances.blue)
-    .replace("{{greenBalance}}", teamBalances.green);
+    .replace("{{greenBalance}}", teamBalances.green)
+    .replace("{{redBalance}}", teamBalances.red);
 
   res.send(filledTemplate);
 });

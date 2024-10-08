@@ -1,5 +1,5 @@
-let teamBalances = { yellow: 5000, blue: 5000, green: 5000 };
-let teamBids = { yellow: 0, blue: 0, green: 0 };
+let teamBalances = { yellow: 5000, blue: 5000, green: 5000, red: 5000 };
+let teamBids = { yellow: 0, blue: 0, green: 0, red: 0 };
 let bidPool = 0;
 
 export function getGameState() {
@@ -28,13 +28,13 @@ export function declareWinner(winner) {
     teamBalances[winner] += bidPool;
     bidPool = 0;
   }
-  teamBids = { yellow: 0, blue: 0, green: 0 };
+  teamBids = { yellow: 0, blue: 0, green: 0, red: 0 };
   emitUpdate();
 }
 
 export function resetGame() {
-  teamBalances = { yellow: 5000, blue: 5000, green: 5000 };
-  teamBids = { yellow: 0, blue: 0, green: 0 };
+  teamBalances = { yellow: 5000, blue: 5000, green: 5000, red: 5000 };
+  teamBids = { yellow: 0, blue: 0, green: 0, red: 0 };
   bidPool = 0;
   emitUpdate();
 }
