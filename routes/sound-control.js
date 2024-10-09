@@ -63,21 +63,16 @@ router.post("/play-category", (req, res) => {
 });
 
 router.post("/play-bid", (req, res) => {
-  if (!musicProcess) {
-    musicProcess = player.play("X:/Apps/awantura_o_kase/public/sounds/bid.mp3", { mplayer: ["-loop", 1, "-endpos", 1] }, (err) => {
-      if (err) {
-        console.log(`Error playing sound: ${err}`);
-        res.status(500).send("Error playing sound");
-      } else {
-        console.log("Bid sound started successfully");
-        res.status(200).send("Sound started");
-      }
-      musicProcess = null;
-    });
-  } else {
-    console.log("Music is already playing");
-    res.status(200).send("Music is already playing");
-  }
+  musicProcess = player.play("X:/Apps/awantura_o_kase/public/sounds/bid.mp3", { mplayer: ["-loop", 1] }, (err) => {
+    if (err) {
+      console.log(`Error playing sound: ${err}`);
+      res.status(500).send("Error playing sound");
+    } else {
+      console.log("Bid sound started successfully");
+      res.status(200).send("Sound started");
+    }
+    musicProcess = null;
+  });
 });
 
 export default router;

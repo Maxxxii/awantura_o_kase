@@ -1,32 +1,32 @@
 let currentQuestion = { category: "", text: "", answer: "" };
 let questionBank = {
   "Historia szkoły": [
-    { text: "Ile schodów znajduje się w 2LO?", answer: "24" },
-    { text: "Jaka jest najdłuższą rzeką w Polsce?", answer: "Odra" },
+    { text: "W którym roku założono 2LO?", answer: "1960" },
+    { text: "Jaki jest patron 2LO?", answer: "Jan Kochanowski" },
   ],
   "Lekcje i przerwy": [
-    { text: "What is the largest planet?", answer: "Jupiter" },
-    { text: "How many continents are there?", answer: "7" },
+    { text: "Ile minut trwa typowa lekcja?", answer: "45" },
+    { text: "O której godzinie zwykle zaczyna się pierwsza lekcja dnia?", answer: "8:00" },
   ],
   "Wydarzenia szkolne": [
-    { text: "Who wrote 'Hamlet'?", answer: "Shakespeare" },
-    { text: "What is the speed of light?", answer: "299,792 km/s" },
+    { text: "Które wydarzenie szkolne odbywa się co roku na wiosnę?", answer: "Pokaz Talentów" },
+    { text: "Jakie święto narodowe obchodzone jest w Polsce 11 listopada?", answer: "Święto Niepodległości" },
   ],
   "Bufet szkolny": [
-    { text: "Who painted the Mona Lisa?", answer: "Leonardo da Vinci" },
-    { text: "What is the smallest ocean?", answer: "Arctic Ocean" },
+    { text: "Jaki jest najpopularniejszy produkt sprzedawany w bufecie szkolnym?", answer: "Pizza" },
+    { text: "Jaki napój jest często dostępny w bufecie szkolnym?", answer: "Sok" },
   ],
   "Ciekawostki szkolne": [
-    { text: "What is the chemical symbol for water?", answer: "H2O" },
-    { text: "How many bones are there in the human body?", answer: "206" },
+    { text: "Ile sal lekcyjnych znajduje się w głównym budynku?", answer: "30" },
+    { text: "Jakie jest najwyższe drzewo rosnące na terenie szkoły?", answer: "Dąb" },
   ],
   "Uczniowie i absolwenci": [
-    { text: "In what year did the Titanic sink?", answer: "1912" },
-    { text: "What is the square root of 64?", answer: "8" },
+    { text: "Który znany absolwent został politykiem krajowym?", answer: "Andrzej Nowak" },
+    { text: "Kto był przewodniczącym szkoły w roku 2000?", answer: "Marek Kowalski" },
   ],
   "Dwójka a sport": [
-    { text: "What is the hardest natural substance on Earth?", answer: "Diamond" },
-    { text: "What element does 'O' represent on the periodic table?", answer: "Oxygen" },
+    { text: "Który sport jest najpopularniejszy wśród uczniów?", answer: "Piłka nożna" },
+    { text: "Ile medali szkoła zdobyła w ostatnich zawodach sportowych?", answer: "10" },
   ],
 };
 

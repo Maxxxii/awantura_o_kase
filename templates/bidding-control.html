@@ -156,6 +156,7 @@
         $.post("/bid", { team: team, bid: bid }, function (data) {
           updateGameState(data);
         });
+        $.post("/play-bid");
       }
 
       function fastBid(team, amount) {
@@ -187,6 +188,7 @@
         $.post("/initialize-bidding", function (data) {
           updateGameState(data);
         });
+        $.post("/play-bid");
       }
 
       function resetBidding() {
