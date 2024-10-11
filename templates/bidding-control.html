@@ -149,6 +149,18 @@
       .va-banque-button:hover {
         background-color: #d35400;
       }
+      #blue-label {
+        color: #0066cc;
+      }
+      #green-label {
+        color: #00cc66;
+      }
+      #red-label {
+        color: #d30000;
+      }
+      #yellow-label {
+        color: #ffcc00;
+      }
     </style>
     <script>
       function updateBid(team) {
@@ -160,9 +172,9 @@
       }
 
       function fastBid(team, amount) {
-        const currentBid = parseInt($(`#${team}Bid`).val()) || 0;
+        const currentBid = parseInt($(`#${team}Bid`).val()) * 100 || 0;
         const newBid = currentBid + amount;
-        $(`#${team}Bid`).val(newBid);
+        $(`#${team}Bid`).val(newBid / 100);
         updateBid(team);
       }
 
@@ -170,6 +182,7 @@
         $.post("/declare-winner", { winner: winner }, function (data) {
           updateGameState(data);
         });
+        $.post("/play-bid");
       }
 
       function updateGameState(data) {
@@ -177,10 +190,10 @@
         $("#blueBalance").text(data.teamBalances.blue);
         $("#greenBalance").text(data.teamBalances.green);
         $("#redBalance").text(data.teamBalances.red);
-        $("#yellowBid").val(data.teamBids.yellow);
-        $("#blueBid").val(data.teamBids.blue);
-        $("#greenBid").val(data.teamBids.green);
-        $("#redBid").val(data.teamBids.red);
+        $("#yellowBid").val(data.teamBids.yellow / 100);
+        $("#blueBid").val(data.teamBids.blue / 100);
+        $("#greenBid").val(data.teamBids.green / 100);
+        $("#redBid").val(data.teamBids.red / 100);
         $("#bidPool").text(data.bidPool);
       }
 
@@ -206,6 +219,36 @@
         $(`#${team}Bid`).val(totalBid);
         updateBid(team);
       }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const blueBidInput = document.getElementById("blueBid");
+        blueBidInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            updateBid("blue");
+          }
+        });
+
+        const greenBidInput = document.getElementById("greenBid");
+        greenBidInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            updateBid("green");
+          }
+        });
+
+        const yellowBidInput = document.getElementById("yellowBid");
+        yellowBidInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            updateBid("yellow");
+          }
+        });
+
+        const redBidInput = document.getElementById("redBid");
+        redBidInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            updateBid("red");
+          }
+        });
+      });
     </script>
   </head>
   <body>
@@ -229,56 +272,56 @@
     <div class="container">
       <!-- Blue Team -->
       <div class="team-column">
-        <h2>Blue Team</h2>
+        <h2 id="blue-label">Blue Team</h2>
         <p>Balance: <span id="blueBalance" class="team-balance">5000</span></p>
         <input type="number" id="blueBid" placeholder="Bid for Blue Team" />
         <button onclick="updateBid('blue')">Update Blue Bid</button>
         <div class="fast-bid-container">
+          <button class="fast-bid-button" onclick="fastBid('blue', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('blue', 200)">+200</button>
           <button class="fast-bid-button" onclick="fastBid('blue', 300)">+300</button>
-          <button class="fast-bid-button" onclick="fastBid('blue', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('blue')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('blue')">Blue Wins</button>
       </div>
 
       <div class="team-column">
-        <h2>Green Team</h2>
+        <h2 id="green-label">Green Team</h2>
         <p>Balance: <span id="greenBalance" class="team-balance">5000</span></p>
         <input type="number" id="greenBid" placeholder="Bid for Green Team" />
         <button onclick="updateBid('green')">Update Green Bid</button>
         <div class="fast-bid-container">
+          <button class="fast-bid-button" onclick="fastBid('green', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('green', 200)">+200</button>
           <button class="fast-bid-button" onclick="fastBid('green', 300)">+300</button>
-          <button class="fast-bid-button" onclick="fastBid('green', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('green')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('green')">Green Wins</button>
       </div>
 
       <div class="team-column">
-        <h2>Yellow Team</h2>
+        <h2 id="yellow-label">Yellow Team</h2>
         <p>Balance: <span id="yellowBalance" class="team-balance">5000</span></p>
         <input type="number" id="yellowBid" placeholder="Bid for Yellow Team" />
         <button onclick="updateBid('yellow')">Update Yellow Bid</button>
         <div class="fast-bid-container">
+          <button class="fast-bid-button" onclick="fastBid('yellow', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('yellow', 200)">+200</button>
           <button class="fast-bid-button" onclick="fastBid('yellow', 300)">+300</button>
-          <button class="fast-bid-button" onclick="fastBid('yellow', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('yellow')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('yellow')">Yellow Wins</button>
       </div>
 
       <div class="team-column">
-        <h2>Red Team</h2>
+        <h2 id="red-label">Red Team</h2>
         <p>Balance: <span id="redBalance" class="team-balance">5000</span></p>
         <input type="number" id="redBid" placeholder="Bid for Red Team" />
         <button onclick="updateBid('red')">Update Red Bid</button>
         <div class="fast-bid-container">
+          <button class="fast-bid-button" onclick="fastBid('red', 100)">+100</button>
           <button class="fast-bid-button" onclick="fastBid('red', 200)">+200</button>
           <button class="fast-bid-button" onclick="fastBid('red', 300)">+300</button>
-          <button class="fast-bid-button" onclick="fastBid('red', 400)">+400</button>
         </div>
         <button class="va-banque-button" onclick="vaBanque('red')">Va Banque</button>
         <button class="win-button" onclick="declareWinner('red')">Red Wins</button>

@@ -16,22 +16,20 @@ const io = new Server(server);
 
 const port = 3000;
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cors());
 
-// Routes
 app.use("/", biddingControlRoutes);
 app.use("/", scoreboardRoutes);
 app.use("/", questionControlRoutes);
 app.use("/", questionboardRoutes);
 app.use("/", infoboardRoutes);
 app.use("/", soundControlRoutes);
-// Socket.io setup
+
 gameStateIo(io);
 questionStateIo(io);
-// Start the server
+
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });

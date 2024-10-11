@@ -6,7 +6,7 @@
     <style>
       @font-face {
         font-family: "Familiada";
-        src: url("http://192.168.18.7:3000/familiada.ttf") format("truetype");
+        src: url("http://{server_ip}:3000/familiada.ttf") format("truetype");
       }
       body {
         font-family: "Familiada", Arial, sans-serif;
@@ -73,6 +73,7 @@
       }
       .green-column {
         background-color: #00cc66;
+        color: black;
       }
       .yellow-column {
         background-color: #ffcc00;
@@ -111,7 +112,7 @@
       socket.on("updateScoreboard", function (data) {
         document.getElementById("yellowBid").innerText = data.teamBids.yellow;
         document.getElementById("blueBid").innerText = data.teamBids.blue;
-        document.getElementById("blueBid").innerText = data.teamBids.blue;
+        document.getElementById("greenBid").innerText = data.teamBids.green;
         document.getElementById("redBid").innerText = data.teamBids.red;
         document.getElementById("pool").innerText = data.bidPool;
         document.getElementById("yellowBalance").innerText = data.teamBalances.yellow;

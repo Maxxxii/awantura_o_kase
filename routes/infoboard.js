@@ -22,7 +22,7 @@ router.get("/infoboard/:id", async (req, res) => {
   const filledTemplate = template
     .replace("{{host}}", host)
     .replace("{{category}}", currentQuestion.category)
-    .replace("{{text}}", currentQuestion.text.toUpperCase())
+    .replace("{{text}}", currentQuestion.text)
     .replace("{{answer}}", currentQuestion.answer)
     .replace("{{blue_score}}", teamBalances.blue)
     .replace("{{blue_bid}}", teamBids.blue)
@@ -30,6 +30,8 @@ router.get("/infoboard/:id", async (req, res) => {
     .replace("{{green_bid}}", teamBids.green)
     .replace("{{yellow_score}}", teamBalances.yellow)
     .replace("{{yellow_bid}}", teamBids.yellow)
+    .replace("{{red_score}}", teamBalances.red)
+    .replace("{{red_bid}}", teamBids.red)
     .replace("{{pool_bids}}", bidPool);
 
   res.send(filledTemplate);

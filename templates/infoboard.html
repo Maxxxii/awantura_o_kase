@@ -4,12 +4,11 @@
     <title>Host Dashboard</title>
     <script src="/socket.io/socket.io.js"></script>
     <style>
-      /* Base Styles */
       body {
         font-family: "Helvetica Neue", Arial, sans-serif;
         background-color: #1c1c1c;
         color: white;
-        margin: 0; /* Ensure no extra margin */
+        margin: 0;
         padding: 0;
         display: flex;
         flex-direction: column;
@@ -18,7 +17,6 @@
         height: 100vh;
       }
 
-      /* Container for the content */
       .host-container {
         display: flex;
         flex-direction: column;
@@ -31,7 +29,6 @@
         box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
       }
 
-      /* Welcome message for the host */
       .welcome-message {
         font-size: 40px;
         text-align: center;
@@ -42,11 +39,9 @@
         font-weight: bold;
       }
 
-      /* General Info styling */
       .info {
         font-size: 30px;
         text-align: center;
-        color: #ddd;
         padding: 5px;
         line-height: 35px;
         margin-bottom: 15px;
@@ -54,29 +49,25 @@
         border-radius: 10px;
       }
 
-      /* Category section styling with background */
       .info#category {
-        background-color: #007acc; /* Light blue for category */
+        background-color: #007acc;
         color: white;
         font-weight: bold;
       }
 
-      /* Question section styling with background */
       .info#question {
-        background-color: #ffcc00; /* Bright yellow for question */
-        color: #333;
+        background-color: #ffcc00;
+        color: #000000;
         font-weight: bold;
       }
 
-      /* Answer section styling (green background for correct answer) */
       .info#answer {
-        background-color: #28a745; /* Green for correct answer */
+        background-color: #28a745;
         color: #fff;
         font-weight: bold;
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
       }
 
-      /* Teams container for scores and bids */
       .teams-container {
         display: flex;
         flex-direction: column;
@@ -86,7 +77,6 @@
         margin-top: 10px;
       }
 
-      /* Team styling */
       .team {
         display: flex;
         flex-direction: column;
@@ -98,33 +88,32 @@
         transition: transform 0.3s, background-color 0.3s;
       }
 
-      /* Blue team */
       .team.blue {
         background-color: #0066ff;
       }
 
-      /* Green team */
       .team.green {
         background-color: #00cc66;
       }
 
-      /* Yellow team - switching text color to black for visibility */
       .team.yellow {
         background-color: #ffcc00;
+      }
+
+      .team.red {
+        background-color: #d30000;
       }
       .team.yellow .team-name,
       .team.yellow .team-score,
       .team.yellow .team-bid {
-        color: #333; /* Dark text to contrast yellow */
+        color: #333;
       }
 
-      /* Hover effect for team cards */
       .team:hover {
         transform: translateY(-5px);
         background-color: #3a3a3a;
       }
 
-      /* Team name styling */
       .team-name {
         font-size: 28px;
         margin-bottom: 10px;
@@ -133,7 +122,6 @@
         letter-spacing: 1px;
       }
 
-      /* Score and Bid styling */
       .team-score,
       .team-bid {
         font-size: 22px;
@@ -141,7 +129,6 @@
         color: #f4f4f4;
       }
 
-      /* Pool of bids styling */
       .pool-bids {
         margin-top: 30px;
         font-size: 28px;
@@ -170,6 +157,9 @@
         document.getElementById("yellow-score").innerText = "Score: " + data.teamBalances.yellow;
         document.getElementById("yellow-bid").innerText = "Bid: " + data.teamBids.yellow;
 
+        document.getElementById("red-score").innerText = "Score: " + data.teamBalances.red;
+        document.getElementById("red-bid").innerText = "Bid: " + data.teamBids.red;
+
         document.getElementById("pool-bids").innerText = "Pool of Bids: " + data.bidPool;
       });
     </script>
@@ -197,6 +187,11 @@
           <div class="team-name">Yellow Team</div>
           <div id="yellow-score" class="team-score">Score: {{yellow_score}}</div>
           <div id="yellow-bid" class="team-bid">Bid: {{yellow_bid}}</div>
+        </div>
+        <div class="team red">
+          <div class="team-name">Red Team</div>
+          <div id="red-score" class="team-score">Score: {{red_score}}</div>
+          <div id="red-bid" class="team-bid">Bid: {{red_bid}}</div>
         </div>
       </div>
 

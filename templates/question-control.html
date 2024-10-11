@@ -115,14 +115,13 @@
     </div>
 
     <div class="container">
-      <!-- Categories and buttons for drawing questions -->
       <div class="category-column">
         <h2>Historia szkoły</h2>
         <button onclick="drawQuestion('Historia szkoły')">Wylosuj</button>
       </div>
       <div class="category-column">
-        <h2>Lekcje i przerwy</h2>
-        <button onclick="drawQuestion('Lekcje i przerwy')">Wylosuj</button>
+        <h2>Dwójkowe sukcesy</h2>
+        <button onclick="drawQuestion('Dwójkowe sukcesy')">Wylosuj</button>
       </div>
       <div class="category-column">
         <h2>Wydarzenia szkolne</h2>
@@ -149,9 +148,10 @@
     <div class="sound-buttons" style="display: flex; justify-content: space-between; margin-top: 20px">
       <div style="display: flex; flex-direction: column; gap: 10px">
         <button onclick="playIntroSound()">Play Intro Sound</button>
+        <button onclick="fadeOutIntroSound()">Fade-out Intro Sound</button>
         <button onclick="stopIntroSound()">Stop Intro Sound</button>
       </div>
-      <div>
+      <div style="display: flex">
         <button onclick="playCategorySound()">Play Category Sound</button>
       </div>
     </div>
@@ -173,6 +173,10 @@
 
       function playCategorySound() {
         $.post("play-category");
+      }
+
+      function fadeOutIntroSound() {
+        $.post("fade-out");
       }
 
       function playIntroSound() {
